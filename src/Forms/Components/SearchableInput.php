@@ -12,7 +12,7 @@ class SearchableInput extends TextInput
     /** @var ?Closure(string): ?array<int|string, string|SearchResult> */
     protected ?Closure $searchUsing = null;
 
-    /** @var ?Closure(SearchResult $item): void */
+    /** @var ?Closure(SearchResult): void */
     protected ?Closure $onItemSelected = null;
 
     /** @var array<array-key, string>|Closure(): ?array<array-key, string>|null */

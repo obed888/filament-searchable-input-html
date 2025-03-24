@@ -11,22 +11,23 @@ class SearchResult implements Arrayable
     public function __construct(
         protected string $value,
         protected string $label,
-    ) {
-    }
+    ) {}
 
-    public static function make(string $value, string $label = null): self
+    public static function make(string $value, ?string $label = null): self
     {
         return new static($value, $label ?? $value);
     }
 
-    public function withData(string|array $key, string $value): self
+    public function withData(string | array $key, string $value): self
     {
         if (is_array($key)) {
             $this->data = $key;
+
             return $this;
         }
 
         data_set($this->data, $key, $value);
+
         return $this;
     }
 
