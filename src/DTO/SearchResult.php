@@ -8,7 +8,7 @@ class SearchResult implements Arrayable
 {
     protected array $data = [];
 
-    public function __construct(
+    final public function __construct(
         protected string $value,
         protected string $label,
     ) {}
