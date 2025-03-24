@@ -5,6 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/defstudio/filament-searchable-input/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/defstudio/filament-searchable-input/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/defstudio/filament-searchable-input.svg?style=flat-square)](https://packagist.org/packages/defstudio/filament-searchable-input)
 
+[demo.webm](https://github.com/user-attachments/assets/cdc816c4-fa80-46f7-bb7b-43f2f018f61e)
 
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
