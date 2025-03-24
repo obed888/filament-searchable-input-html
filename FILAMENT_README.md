@@ -1,4 +1,4 @@
-# A searchable autocomplete input for Filament
+# Filament Searchable Input
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/defstudio/filament-searchable-input.svg?style=flat-square)](https://packagist.org/packages/defstudio/filament-searchable-input)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/defstudio/filament-searchable-input/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/defstudio/filament-searchable-input/actions?query=workflow%3A"fix-php-code-style-issues"+branch%3Amain)
