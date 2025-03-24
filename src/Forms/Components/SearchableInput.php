@@ -24,7 +24,7 @@ class SearchableInput extends TextInput
         $this->extraInputAttributes(['x-model' => 'value']);
 
         $this->registerActions([
-            Action::make('search')->action(function(SearchableInput $component, array $arguments): array {
+            Action::make('search')->action(function (SearchableInput $component, array $arguments): array {
                 if ($component->isDisabled() || $component->isReadOnly()) {
                     return [];
                 }
@@ -37,12 +37,12 @@ class SearchableInput extends TextInput
                 ]);
 
                 $results ??= collect($this->getOptions())
-                    ->filter(fn(string $option) => str($option)->contains($search))
+                    ->filter(fn (string $option) => str($option)->contains($search))
                     ->toArray();
 
-                if (collect($results)->every(fn($item) => is_string($item))) {
+                if (collect($results)->every(fn ($item) => is_string($item))) {
                     $results = collect($results)
-                        ->map(fn($item, $key) => [
+                        ->map(fn ($item, $key) => [
                             'value' => $key,
                             'label' => $item,
                         ]);
@@ -51,7 +51,7 @@ class SearchableInput extends TextInput
                 return $results->toArray();
             }),
 
-            Action::make('item_selected')->action(function($arguments) {
+            Action::make('item_selected')->action(function ($arguments) {
                 $this->evaluate($this->onItemSelected, [
                     'item' => $arguments['item'],
                 ]);
