@@ -8,13 +8,13 @@ use Filament\Forms\Components\TextInput;
 
 class SearchableInput extends TextInput
 {
-    /** @var ?Closure(string): array<int|string, string|array{label: string, value: string}> */
+    /** @var ?Closure(string): ?array<int|string, string|array{label: string, value: string}> */
     protected ?Closure $searchUsing = null;
 
     /** @var ?Closure(array{label: string, value: string}>:): void */
     protected ?Closure $onItemSelected = null;
 
-    /** @var array<array-key, string>|Closure(): array<array-key, string>|null */
+    /** @var array<array-key, string>|Closure(): ?array<array-key, string>|null */
     protected array | Closure | null $options = null;
 
     protected function setUp(): void
