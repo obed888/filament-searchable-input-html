@@ -37,7 +37,7 @@
              class="def-fo-searchable-input-dropdown"
         >
             <div class="def-fo-searchable-input-dropdown-wrapper">
-                <ul class="def-fo-searchable-input-dropdown-list">
+                <ul class="def-fo-searchable-input-dropdown-list" wire:loading.class.delay="def-fo-searchable-input-dropdown-list-loading">
                     <template x-for="(suggestion, index) in suggestions">
                         <li class="def-fo-searchable-input-dropdown-list-item"
                             x-bind:class="{

@@ -12,12 +12,16 @@
     @apply text-sm font-medium text-gray-950 dark:text-white;
 }
 
-.def-fo-searchable-input-dropdown-wrapper{
+.def-fo-searchable-input-dropdown .def-fo-searchable-input-dropdown-wrapper{
     @apply max-h-60 overflow-y-auto;
 }
 
 .def-fo-searchable-input-dropdown .def-fo-searchable-input-dropdown-list{
     @apply h-full;
+}
+
+.def-fo-searchable-input-dropdown .def-fo-searchable-input-dropdown-list.def-fo-searchable-input-dropdown-list-loading{
+    @apply opacity-50;
 }
 
 .def-fo-searchable-input-dropdown .def-fo-searchable-input-dropdown-list-item {
