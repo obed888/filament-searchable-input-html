@@ -13,11 +13,13 @@ export default function searchableInput({statePath}) {
 
             if (!this.value) {
                 this.suggestions = []
+                this.previous_value = null
                 return
             }
 
             this.previous_value = this.value
 
+            // noinspection JSPotentiallyInvalidUsageOfThis
             this.$wire.mountFormComponentAction(statePath, 'search', { value: this.value })
                 .then(response => {
                     this.suggestions = response
@@ -31,6 +33,8 @@ export default function searchableInput({statePath}) {
 
             this.value = item.value
             this.suggestions = []
+
+            // noinspection JSPotentiallyInvalidUsageOfThis
             this.$wire.mountFormComponentAction(statePath, 'item_selected', { item: item })
         },
         previous_suggestion() {
