@@ -137,6 +137,7 @@ class ProductResource
 ```php
 
 use DefStudio\SearchableInput\Forms\Components\SearchableInput;
+use DefStudio\SearchableInput\DTO\SearchResult;
 
 class ProductResource
 {
@@ -149,31 +150,23 @@ class ProductResource
                     return Product::query()
                         ->where('description', 'like', "%$search%")
                         ->limit(15)
-                        ->map(fn(Product $product) => [
-                            'value' => $product->description,
-                            'label' => $product->code . ' - ' . $product->description,
-                            'product_id' => $product->id,
-                            'product_code' => $product->code,
-                        ])
+                        ->map(fn(Product $product) => SearchResult::make($product->description, "[$product->code] $product->description")
+                            ->withData('product_id', $product->id)
+                            ->withData('product_code', $product->code) 
+                        )
                         ->toArray()
                         
                 })
-                ->onItemSelected(function(array $item){
-                    /*
-                     * $item = [
-                     *      'value' => // "product description",
-                     *      'label' => //the dropdown label
-                     *      'product_id' => eg. 42
-                     *      'product_code' => eg. "AB0042"
-                     * ]
-                     */ 
+                ->onItemSelected(function(SearchResult $item){
+                    $item->value();
+                    $item->label();
+                    $item->get('product_id');
+                    $item->get('product_code');
                 }),
         ]);
     }
 }
 ```
-
-Note: in order for this to work, each item must have at least a `value` and a `label` key.
 
 
 ## Filament Utility Injection

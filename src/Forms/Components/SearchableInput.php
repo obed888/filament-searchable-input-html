@@ -3,15 +3,16 @@
 namespace DefStudio\SearchableInput\Forms\Components;
 
 use Closure;
+use DefStudio\SearchableInput\DTO\SearchResult;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\TextInput;
 
 class SearchableInput extends TextInput
 {
-    /** @var ?Closure(string): ?array<int|string, string|array{label: string, value: string}> */
+    /** @var ?Closure(string): ?array<int|string, string|SearchResult> */
     protected ?Closure $searchUsing = null;
 
-    /** @var ?Closure(array{label: string, value: string}>:): void */
+    /** @var ?Closure(SearchResult $item): void */
     protected ?Closure $onItemSelected = null;
 
     /** @var array<array-key, string>|Closure(): ?array<array-key, string>|null */
@@ -43,16 +44,11 @@ class SearchableInput extends TextInput
                 if (collect($results)->every(fn ($item) => is_string($item))) {
                     if (array_is_list($results)) {
                         $results = collect($results)
-                            ->map(fn ($item) => [
-                                'value' => $item,
-                                'label' => $item,
-                            ])->toArray();
+                            ->map(fn ($item) => SearchResult::make($item))
+                            ->toArray();
                     } else {
                         $results = collect($results)
-                            ->map(fn ($item, $key) => [
-                                'value' => $key,
-                                'label' => $item,
-                            ])->toArray();
+                            ->map(fn ($item, $key) => SearchResult::make($key, $item))->toArray();
                     }
                 }
 
@@ -61,7 +57,7 @@ class SearchableInput extends TextInput
 
             Action::make('item_selected')->action(function ($arguments) {
                 $this->evaluate($this->onItemSelected, [
-                    'item' => $arguments['item'],
+                    'item' => SearchResult::make($arguments['item']),
                 ]);
             }),
         ]);
@@ -85,6 +81,9 @@ class SearchableInput extends TextInput
         return $this;
     }
 
+    /**
+     * @param  ?Closure(string): ?array<int|string, string|SearchResult>  $searchUsing
+     */
     public function searchUsing(?Closure $searchUsing): static
     {
         $this->searchUsing = $searchUsing;
@@ -92,6 +91,9 @@ class SearchableInput extends TextInput
         return $this;
     }
 
+    /**
+     * @param  ?Closure(SearchResult $item): void  $callback
+     */
     public function onItemSelected(?Closure $callback): static
     {
         $this->onItemSelected = $callback;
