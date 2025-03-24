@@ -36,17 +36,19 @@
         <div x-show="suggestions.length > 0"
              class="def-fo-searchable-input-dropdown"
         >
-            <ul class="def-fo-searchable-input-dropdown-list">
-                <template x-for="(suggestion, index) in suggestions">
-                    <li class="def-fo-searchable-input-dropdown-list-item"
-                        x-bind:class="{
+            <div class="def-fo-searchable-input-dropdown-wrapper">
+                <ul class="def-fo-searchable-input-dropdown-list">
+                    <template x-for="(suggestion, index) in suggestions">
+                        <li class="def-fo-searchable-input-dropdown-list-item"
+                            x-bind:class="{
                             'def-fo-searchable-input-dropdown-list-item-selected': selected_suggestion === index
                         }"
-                        x-text="`${suggestion.label}`"
-                        x-on:click="set(suggestion)"
-                    ></li>
-                </template>
-            </ul>
+                            x-text="`${suggestion.label}`"
+                            x-on:click="set(suggestion)"
+                        ></li>
+                    </template>
+                </ul>
+            </div>
         </div>
     </x-filament-forms::field-wrapper>
 @else
