@@ -4,12 +4,17 @@ namespace DefStudio\SearchableInput\Forms\Components;
 
 use Closure;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Concerns\HasOptions;
 use Filament\Forms\Components\TextInput;
 
 class SearchableInput extends TextInput
 {
+    use HasOptions;
+
+    /** @var ?Closure(string $search): array<int, array{label: string, value: string}> */
     protected ?Closure $searchUsing = null;
 
+    /** @var ?Closure(array{label: string, value: string}>: $item): void  */
     protected ?Closure $onItemSelected = null;
 
     protected function setUp(): void
@@ -19,14 +24,26 @@ class SearchableInput extends TextInput
         $this->extraInputAttributes(['x-model' => 'value']);
 
         $this->registerActions([
-            Action::make('search')->action(function (array $arguments) {
+            Action::make('search')->action(function(array $arguments): array {
                 $search = $arguments['value'];
 
-                return $this->evaluate($this->searchUsing, [
-                    'search' => $search,
-                ]);
+                if ($this->searchUsing !== null) {
+                    return $this->evaluate($this->searchUsing, [
+                        'search' => $search,
+                        'options' => $this->getOptions(),
+                    ]);
+                }
+
+                return collect($this->getOptions())
+                    ->map(fn(string $label, string $value) => [
+                        'label' => $label,
+                        'value' => $value,
+                    ])
+                    ->values()
+                    ->toArray();
             }),
-            Action::make('item_selected')->action(function ($arguments) {
+
+            Action::make('item_selected')->action(function($arguments) {
                 $this->evaluate($this->onItemSelected, [
                     'item' => $arguments['item'],
                 ]);
@@ -50,6 +67,6 @@ class SearchableInput extends TextInput
 
     public function isSearchEnabled(): bool
     {
-        return $this->searchUsing !== null;
+        return $this->searchUsing !== null || $this->getOptions() !== [];
     }
 }

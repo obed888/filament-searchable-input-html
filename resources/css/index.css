@@ -5,8 +5,7 @@
 }
 
 .def-fo-searchable-input-dropdown{
-    @apply z-10 absolute top-full mt-2 left-0;
-    @apply max-h-60;
+    @apply z-10 absolute top-full mt-2 left-0 pr-2 overflow-hidden;
     @apply rounded-lg bg-white dark:bg-gray-900;
     @apply shadow-lg  ring-1 ring-gray-950/5 dark:ring-white/10;
     @apply will-change-[visibility];
@@ -14,7 +13,7 @@
 }
 
 .def-fo-searchable-input-dropdown-wrapper{
-    @apply overflow-y-auto;
+    @apply max-h-60 overflow-y-auto;
 }
 
 .def-fo-searchable-input-dropdown .def-fo-searchable-input-dropdown-list{
