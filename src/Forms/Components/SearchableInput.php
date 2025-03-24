@@ -11,10 +11,10 @@ class SearchableInput extends TextInput
 {
     use HasOptions;
 
-    /** @var ?Closure(string): array<int, array{label: string, value: string}> */
+    /** @var ?Closure(string $search): array<int, array{label: string, value: string}> */
     protected ?Closure $searchUsing = null;
 
-    /** @var ?Closure(array{label: string, value: string}>:): void */
+    /** @var ?Closure(array{label: string, value: string}>: $item): void */
     protected ?Closure $onItemSelected = null;
 
     protected function setUp(): void
@@ -24,7 +24,11 @@ class SearchableInput extends TextInput
         $this->extraInputAttributes(['x-model' => 'value']);
 
         $this->registerActions([
-            Action::make('search')->action(function (array $arguments): array {
+            Action::make('search')->action(function(SearchableInput $component, array $arguments): array {
+                if ($component->isDisabled() || $component->isReadOnly()) {
+                    return [];
+                }
+
                 $search = $arguments['value'];
 
                 if ($this->searchUsing !== null) {
@@ -35,7 +39,7 @@ class SearchableInput extends TextInput
                 }
 
                 return collect($this->getOptions())
-                    ->map(fn (string $label, string $value) => [
+                    ->map(fn(string $label, string $value) => [
                         'label' => $label,
                         'value' => $value,
                     ])
@@ -43,7 +47,7 @@ class SearchableInput extends TextInput
                     ->toArray();
             }),
 
-            Action::make('item_selected')->action(function ($arguments) {
+            Action::make('item_selected')->action(function($arguments) {
                 $this->evaluate($this->onItemSelected, [
                     'item' => $arguments['item'],
                 ]);
