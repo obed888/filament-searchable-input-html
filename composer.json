@@ -1,6 +1,6 @@
 {
     "name": "defstudio/filament-searchable-input",
-    "description": "A searchable autocomplete input for Filament",
+    "description": "A searchable autocomplete input for Filament forms",
     "keywords": [
         "defstudio",
         "laravel",
