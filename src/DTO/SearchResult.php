@@ -41,7 +41,7 @@ class SearchResult implements Arrayable
         return $this->label;
     }
 
-    public function get(string $key, mixed $default = null): array
+    public function get(string $key, mixed $default = null): mixed
     {
         return data_get($this->data, $key, $default);
     }
