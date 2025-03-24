@@ -1,7 +1,10 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
-namespace VendorName\Skeleton;
+/** @noinspection PhpMultipleClassDeclarationsInspection */
 
+namespace DefStudio\SearchableInput;
+
+use DefStudio\SearchableInput\View\Components\Wrapper;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -13,14 +16,13 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
-use VendorName\Skeleton\Testing\TestsSkeleton;
+use DefStudio\SearchableInput\Testing\TestsSearchableInput;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class SearchableInputServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'skeleton';
+    public static string $name = 'filament-searchable-input';
 
-    public static string $viewNamespace = 'skeleton';
+    public static string $viewNamespace = 'searchable-input';
 
     public function configurePackage(Package $package): void
     {
@@ -30,23 +32,18 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package->name(static::$name)
-            ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub(':vendor_slug/:package_slug');
+                    ->askToStarRepoOnGitHub('defstudio/filament-searchable-input');
             });
 
         $configFileName = $package->shortName();
 
-        if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
+        if (file_exists($package->basePath("/../config/$configFileName.php"))) {
             $package->hasConfigFile();
-        }
-
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
         }
 
         if (file_exists($package->basePath('/../resources/lang'))) {
@@ -55,6 +52,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
 
         if (file_exists($package->basePath('/../resources/views'))) {
             $package->hasViews(static::$viewNamespace);
+            $package->hasViewComponent(static::$viewNamespace, Wrapper::class);
         }
     }
 
@@ -80,18 +78,18 @@ class SkeletonServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
+                    $file->getRealPath() => base_path("stubs/filament-searchable-input/{$file->getFilename()}"),
+                ], 'filament-searchable-input-stubs');
             }
         }
 
         // Testing
-        Testable::mixin(new TestsSkeleton);
+        Testable::mixin(new TestsSearchableInput);
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return ':vendor_slug/:package_slug';
+        return 'defstudio/filament-searchable-input';
     }
 
     /**
@@ -100,19 +98,8 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            // AlpineComponent::make('skeleton', __DIR__ . '/../resources/dist/components/skeleton.js'),
-            Css::make('skeleton-styles', __DIR__ . '/../resources/dist/skeleton.css'),
-            Js::make('skeleton-scripts', __DIR__ . '/../resources/dist/skeleton.js'),
-        ];
-    }
-
-    /**
-     * @return array<class-string>
-     */
-    protected function getCommands(): array
-    {
-        return [
-            SkeletonCommand::class,
+            Css::make('filament-searchable-input-styles', __DIR__ . '/../resources/dist/filament-searchable-input.css'),
+            AlpineComponent::make('filament-searchable-input', __DIR__ . '/../resources/dist/filament-searchable-input.js'),
         ];
     }
 
@@ -138,15 +125,5 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getScriptData(): array
     {
         return [];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getMigrations(): array
-    {
-        return [
-            'create_skeleton_table',
-        ];
     }
 }
