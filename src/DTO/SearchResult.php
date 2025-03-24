@@ -59,6 +59,7 @@ class SearchResult implements Arrayable
         return [
             'value' => $this->value,
             'label' => $this->label,
+            'data' => $this->data,
         ];
     }
 }
