@@ -1,5 +1,9 @@
 @import '../../vendor/filament/filament/resources/css/theme.css';
 
+.def-fo-searchable-input-wrapper{
+    @apply relative;
+}
+
 .def-fo-searchable-input-dropdown{
     @apply z-10 absolute top-full mt-2 left-0 overflow-y-auto;
     @apply max-h-60;

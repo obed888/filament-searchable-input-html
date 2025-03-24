@@ -8,6 +8,8 @@
         :field="$field"
         :has-inline-label="$hasInlineLabel"
 
+        class="def-fo-searchable-input-wrapper"
+
         x-load
         x-load-src="{{\Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-searchable-input', 'defstudio/filament-searchable-input')}}"
         x-data="searchableInput({
@@ -20,7 +22,7 @@
         x-on:keyup.prevent.esc=""
         x-on:keyup.prevent.up=""
         x-on:keyup.prevent.down=""
-        x-on:keyup="$event.key != 'Enter' && $event.key != 'ArrowDown' && $event.key != 'ArrrowUp' && $event.key != 'Escape' &&  refresh_suggestions"
+        x-on:keyup="$event.key != 'Enter' && $event.key != 'ArrowDown' && $event.key != 'ArrowUp' && $event.key != 'Escape' &&  refresh_suggestions"
 
         x-on:keydown.prevent.enter="set(suggestions[selected_suggestion])"
         x-on:keydown.prevent.esc="suggestions = []"
