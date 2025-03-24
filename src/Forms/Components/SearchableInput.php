@@ -11,7 +11,7 @@ class SearchableInput extends TextInput
 {
     use HasOptions;
 
-    /** @var ?Closure(string): array<int, array{label: string, value: string}> */
+    /** @var ?Closure(string): array<int|string, string|array{label: string, value: string}> */
     protected ?Closure $searchUsing = null;
 
     /** @var ?Closure(array{label: string, value: string}>:): void */
@@ -24,30 +24,34 @@ class SearchableInput extends TextInput
         $this->extraInputAttributes(['x-model' => 'value']);
 
         $this->registerActions([
-            Action::make('search')->action(function (SearchableInput $component, array $arguments): array {
+            Action::make('search')->action(function(SearchableInput $component, array $arguments): array {
                 if ($component->isDisabled() || $component->isReadOnly()) {
                     return [];
                 }
 
                 $search = $arguments['value'];
 
-                if ($this->searchUsing !== null) {
-                    return $this->evaluate($this->searchUsing, [
-                        'search' => $search,
-                        'options' => $this->getOptions(),
-                    ]);
+                $results = $this->evaluate($this->searchUsing, [
+                    'search' => $search,
+                    'options' => $this->getOptions(),
+                ]);
+
+                $results ??= collect($this->getOptions())
+                    ->filter(fn(string $option) => str($option)->contains($search))
+                    ->toArray();
+
+                if (collect($results)->every(fn($item) => is_string($item))) {
+                    $results = collect($results)
+                        ->map(fn($item, $key) => [
+                            'value' => $key,
+                            'label' => $item,
+                        ]);
                 }
 
-                return collect($this->getOptions())
-                    ->map(fn (string $label, string $value) => [
-                        'label' => $label,
-                        'value' => $value,
-                    ])
-                    ->values()
-                    ->toArray();
+                return $results;
             }),
 
-            Action::make('item_selected')->action(function ($arguments) {
+            Action::make('item_selected')->action(function($arguments) {
                 $this->evaluate($this->onItemSelected, [
                     'item' => $arguments['item'],
                 ]);
