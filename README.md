@@ -6,10 +6,10 @@
 
 ![image](https://github.com/user-attachments/assets/6e85aa0e-13b5-4776-ae96-b3abc23d9f5f)
 
+A searchable autocomplete input for Filament
+
 [Demo](https://github.com/user-attachments/assets/cdc816c4-fa80-46f7-bb7b-43f2f018f61e)
 
-
-A searchable autocomplete input for Filament
 
 ## Installation
 
