@@ -5,6 +5,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/defstudio/filament-searchable-input.svg?style=flat-square)](https://packagist.org/packages/defstudio/filament-searchable-input)
 
 
+
 A searchable autocomplete input form field
 
 ## Installation
