@@ -6,16 +6,19 @@ use Closure;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Concerns\HasOptions;
 use Filament\Forms\Components\TextInput;
+use Illuminate\Contracts\Support\Arrayable;
 
 class SearchableInput extends TextInput
 {
-    use HasOptions;
-
     /** @var ?Closure(string): array<int|string, string|array{label: string, value: string}> */
     protected ?Closure $searchUsing = null;
 
     /** @var ?Closure(array{label: string, value: string}>:): void */
     protected ?Closure $onItemSelected = null;
+
+    /** @var array<array-key, string>|Closure(): array<array-key, string>|null */
+    protected array|Closure|null $options = null;
+
 
     protected function setUp(): void
     {
@@ -24,7 +27,7 @@ class SearchableInput extends TextInput
         $this->extraInputAttributes(['x-model' => 'value']);
 
         $this->registerActions([
-            Action::make('search')->action(function (SearchableInput $component, array $arguments): array {
+            Action::make('search')->action(function(SearchableInput $component, array $arguments): array {
                 if ($component->isDisabled() || $component->isReadOnly()) {
                     return [];
                 }
@@ -37,26 +40,51 @@ class SearchableInput extends TextInput
                 ]);
 
                 $results ??= collect($this->getOptions())
-                    ->filter(fn (string $option) => str($option)->contains($search))
+                    ->filter(fn(string $option) => str($option)->contains($search))
                     ->toArray();
 
-                if (collect($results)->every(fn ($item) => is_string($item))) {
-                    $results = collect($results)
-                        ->map(fn ($item, $key) => [
-                            'value' => $key,
-                            'label' => $item,
-                        ])->toArray();
+                if (collect($results)->every(fn($item) => is_string($item))) {
+                    if(array_is_list($results)) {
+                        $results = collect($results)
+                            ->map(fn($item) => [
+                                'value' => $item,
+                                'label' => $item,
+                            ])->toArray();
+                    }else{
+                        $results = collect($results)
+                            ->map(fn($item, $key) => [
+                                'value' => $key,
+                                'label' => $item,
+                            ])->toArray();
+                    }
                 }
 
                 return $results;
             }),
 
-            Action::make('item_selected')->action(function ($arguments) {
+            Action::make('item_selected')->action(function($arguments) {
                 $this->evaluate($this->onItemSelected, [
                     'item' => $arguments['item'],
                 ]);
             }),
         ]);
+    }
+
+    /**
+     * @return array<array-key, string>
+     */
+    public function getOptions(): array
+    {
+        return $this->evaluate($this->options) ?? [];
+    }
+
+    /**
+     * @param  array<array-key, string>|Closure(): array<array-key, string>|null  $options
+     */
+    public function options(array|Closure|null $options): static
+    {
+        $this->options = $options;
+        return $this;
     }
 
     public function searchUsing(?Closure $searchUsing): static

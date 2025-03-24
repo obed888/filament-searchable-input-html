@@ -42,6 +42,36 @@ class ProductResource
         return $form->schema([
             SearchableInput::make('description')
                 ->options([
+                    'Lorem ipsum dolor',
+                    'Aspernatur labore qui fugiat',
+                    'Dolores tempora libero assumenda',
+                    'Qui rem voluptas officiis ut non',
+                    
+                    //..
+                    
+                ])
+        ]);
+    }
+}
+```
+
+### Value-Label pairs options
+
+Options can be defined also as an array of Value and Label pairs.
+
+The `Value` will be inserted in the Input field when the user select an item. The `Label` is just used as a display value inside the search dropdown.
+
+
+```php
+use DefStudio\SearchableInput\Forms\Components\SearchableInput;
+
+class ProductResource
+{
+    public static function form(Form $form): Form
+    {
+        return $form->schema([
+            SearchableInput::make('description')
+                ->options([
                     'Lorem ipsum dolor' => '[A001] Lorem ipsum dolor.',
                     'Aspernatur labore qui fugiat' => '[A001] Aspernatur labore qui fugiat.',
                     'Dolores tempora libero assumenda' => '[A002] Dolores tempora libero assumenda.',
@@ -84,14 +114,12 @@ class ProductResource
 }
 ```
 
-a Value-Label pairs array should be returned by the search function, in order to display a dropdown with the corresponding items
-
-NOTE: if `Value` and `Label` differ, the `Value` will be inserted in the Input field when the user select an item. The `Label` is just used as a display value inside the dropdown.
+a Values list or a Value-Label pairs array should be returned by the search function, in order to display a dropdown with the corresponding items. 
 
 
 ## Complex Items
 
-`SearchableInput` supports using arrays as dropdown items, this allows to pass metadata to the selected item and consume it in the `->onItemSelected()` method:
+`SearchableInput` supports using arrays as search results, this allows to pass metadata to the selected item and consume it in the `->onItemSelected()` method:
 
 ```php
 
@@ -131,6 +159,9 @@ class ProductResource
     }
 }
 ```
+
+Note: in order for this to work, each item must have at least a `value` and a `label` key.
+
 
 ## Filament Utility Injection
 
