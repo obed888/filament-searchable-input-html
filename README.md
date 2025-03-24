@@ -104,17 +104,30 @@ class ProductResource
                 
                     return Product::query()
                         ->where('description', 'like', "%$search%")
+                        ->orWhere('code', 'like', "%$search%")
                         ->limit(15)
-                        ->pluck('description', 'description')
-                        ->toArray()
+                        ->pluck('description')
+                        ->values()
+                        ->toArray();
                         
+                    // Or, an associative array as well...
+                    
+                    return Product::query()
+                        ->where('description', 'like', "%$search%")
+                        ->orWhere('code', 'like', "%$search%")
+                        ->limit(15)
+                        ->mapWithKeys(fn(Product $product) => [
+                            $product->description => "[$product->code] $product->description"
+                        ])
+                        ->toArray();            
+                        
+                        
+                    // Or, also, an array of complex items (see below)
                 })
         ]);
     }
 }
 ```
-
-a Values list or a Value-Label pairs array should be returned by the search function, in order to display a dropdown with the corresponding items. 
 
 
 ## Complex Items
