@@ -9,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 class SearchableInput extends TextInput
 {
     protected ?Closure $searchUsing = null;
+
     protected ?Closure $onItemSelected = null;
 
     protected function setUp(): void
@@ -33,14 +34,14 @@ class SearchableInput extends TextInput
         ]);
     }
 
-    public function searchUsing(Closure|null $searchUsing): static
+    public function searchUsing(?Closure $searchUsing): static
     {
         $this->searchUsing = $searchUsing;
 
         return $this;
     }
 
-    public function onItemSelected(Closure|null $callback): static
+    public function onItemSelected(?Closure $callback): static
     {
         $this->onItemSelected = $callback;
 

@@ -7,7 +7,6 @@ use Illuminate\View\Component;
 
 class Wrapper extends Component
 {
-
     public function render(): View
     {
         return view('searchable-input::components.wrapper');
