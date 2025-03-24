@@ -21,7 +21,7 @@
 }
 
 .def-fo-searchable-input-dropdown .def-fo-searchable-input-dropdown-list.def-fo-searchable-input-dropdown-list-loading{
-    @apply opacity-50;
+    @apply animate-pulse;
 }
 
 .def-fo-searchable-input-dropdown .def-fo-searchable-input-dropdown-list-item {
