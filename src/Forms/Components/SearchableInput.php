@@ -38,7 +38,7 @@ class SearchableInput extends TextInput
                 ]);
 
                 $results ??= collect($this->getOptions())
-                    ->filter(fn (string $option) => str($option)->contains($search))
+                    ->filter(fn (string $option) => str($option)->contains($search, true))
                     ->toArray();
 
                 if (collect($results)->every(fn ($item) => is_string($item))) {
