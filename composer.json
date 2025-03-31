@@ -4,7 +4,9 @@
     "keywords": [
         "defstudio",
         "laravel",
-        "filament-searchable-input"
+        "filament",
+        "forms",
+        "input"
     ],
     "homepage": "https://github.com/defstudio/filament-searchable-input",
     "support": {
