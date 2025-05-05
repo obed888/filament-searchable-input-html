@@ -2,6 +2,18 @@
 
 All notable changes to `filament-searchable-input` will be documented in this file.
 
+## v1.0.13 - 2025-05-05
+
+### What's Changed
+
+* [fix] search result metadata type by @fabio-ivona in https://github.com/defstudio/filament-searchable-input/pull/4
+
+### New Contributors
+
+* @fabio-ivona made their first contribution in https://github.com/defstudio/filament-searchable-input/pull/4
+
+**Full Changelog**: https://github.com/defstudio/filament-searchable-input/compare/v1.0.12...v1.0.13
+
 ## v1.0.12 - 2025-03-31
 
 **Full Changelog**: https://github.com/defstudio/filament-searchable-input/compare/v1.0.11...v1.0.12
