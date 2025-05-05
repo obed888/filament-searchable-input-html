@@ -6,6 +6,9 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class SearchResult implements Arrayable
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $data = [];
 
     final public function __construct(
@@ -18,7 +21,7 @@ class SearchResult implements Arrayable
         return new static($value, $label ?? $value);
     }
 
-    public function withData(string | array $key, string $value): self
+    public function withData(string | array $key, mixed $value): self
     {
         if (is_array($key)) {
             $this->data = $key;
