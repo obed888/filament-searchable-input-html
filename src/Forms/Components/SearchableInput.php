@@ -38,20 +38,18 @@ class SearchableInput extends TextInput
                 ]);
 
                 $results ??= collect($this->getOptions())
-                    ->filter(fn(string $option) => str($option)->contains($search, true))
+                    ->filter(fn (string $option) => str($option)->contains($search, true))
                     ->toArray();
-
 
                 if (array_is_list($results)) {
                     $results = collect($results)
-                        ->map(fn($item) => $item instanceof SearchResult ? $item : SearchResult::make($item))
+                        ->map(fn ($item) => $item instanceof SearchResult ? $item : SearchResult::make($item))
                         ->toArray();
                 } else {
                     $results = collect($results)
-                        ->map(fn($item, $key) => $item instanceof SearchResult ? $item : SearchResult::make($key, $item))
+                        ->map(fn ($item, $key) => $item instanceof SearchResult ? $item : SearchResult::make($key, $item))
                         ->toArray();
                 }
-
 
                 return array_values($results);
             }),
