@@ -41,18 +41,17 @@ class SearchableInput extends TextInput
                     ->filter(fn (string $option) => str($option)->contains($search, true))
                     ->toArray();
 
-                if (collect($results)->every(fn ($item) => is_string($item))) {
-                    if (array_is_list($results)) {
-                        $results = collect($results)
-                            ->map(fn ($item) => SearchResult::make($item))
-                            ->toArray();
-                    } else {
-                        $results = collect($results)
-                            ->map(fn ($item, $key) => SearchResult::make($key, $item))->toArray();
-                    }
+                if (array_is_list($results)) {
+                    $results = collect($results)
+                        ->map(fn ($item) => $item instanceof SearchResult ? $item : SearchResult::make($item))
+                        ->toArray();
+                } else {
+                    $results = collect($results)
+                        ->map(fn ($item, $key) => $item instanceof SearchResult ? $item : SearchResult::make($key, $item))
+                        ->toArray();
                 }
 
-                return $results;
+                return array_values($results);
             }),
 
             Action::make('item_selected')->action(function ($arguments) {
