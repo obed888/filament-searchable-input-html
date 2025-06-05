@@ -54,8 +54,8 @@ class SearchableInput extends TextInput
                 return array_values($results);
             }),
 
-            Action::make('item_selected')->action(function ($arguments) {
-                $this->evaluate($this->onItemSelected, [
+            Action::make('item_selected')->action(function ($arguments, SearchableInput $component) {
+                $component->evaluate($this->onItemSelected, [
                     'item' => SearchResult::fromArray($arguments['item']),
                 ]);
             }),
