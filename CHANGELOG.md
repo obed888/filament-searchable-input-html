@@ -2,6 +2,16 @@
 
 All notable changes to `filament-searchable-input` will be documented in this file.
 
+## v1.0.14 - 2025-06-05
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot in https://github.com/defstudio/filament-searchable-input/pull/5
+* fix non sequential arrays by @MarioGattolla in https://github.com/defstudio/filament-searchable-input/pull/7
+* fix onInputSelected for inputs inside a Repeater
+
+**Full Changelog**: https://github.com/defstudio/filament-searchable-input/compare/v1.0.13...v1.0.14
+
 ## v1.0.13 - 2025-05-05
 
 ### What's Changed
