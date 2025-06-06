@@ -14,14 +14,25 @@ class SearchResult implements Arrayable
     final public function __construct(
         protected string $value,
         protected string $label,
-    ) {}
+    ) {
+    }
 
-    public static function make(string $value, ?string $label = null): self
+    public static function make(string|array|SearchResult $value, ?string $label = null): self
     {
+        if (is_array($value)) {
+            $searchResult = new SearchResult($value['value'], $value['label']);
+            $searchResult->data = $value['data'];
+            return $searchResult;
+        }
+
+        if ($value instanceof SearchResult) {
+            return $value;
+        }
+
         return new static($value, $label ?? $value);
     }
 
-    public function withData(string | array $key, mixed $value): self
+    public function withData(string|array $key, mixed $value): self
     {
         if (is_array($key)) {
             $this->data = $key;
