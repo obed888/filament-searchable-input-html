@@ -2,6 +2,10 @@
 
 All notable changes to `filament-searchable-input` will be documented in this file.
 
+## v1.0.15 - 2025-06-06
+
+**Full Changelog**: https://github.com/defstudio/filament-searchable-input/compare/v1.0.14...v1.0.15
+
 ## v1.0.14 - 2025-06-05
 
 ### What's Changed
