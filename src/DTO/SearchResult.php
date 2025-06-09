@@ -32,6 +32,14 @@ class SearchResult implements Arrayable
         return new static($value, $label ?? $value);
     }
 
+    public function htmlLabel(string $label): static
+    {
+        $this->label = $label;
+        $this->attributes['html'] = true;
+
+        return $this;
+    }
+
     public function withData(string | array $key, mixed $value): self
     {
         if (is_array($key)) {

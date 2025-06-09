@@ -43,7 +43,7 @@
                             x-bind:class="{
                             'def-fo-searchable-input-dropdown-list-item-selected': selected_suggestion === index
                         }"
-                            x-text="`${suggestion.label}`"
+                            x-html="suggestion.label"
                             x-on:click="set(suggestion)"
                         ></li>
                     </template>
